@@ -65,17 +65,19 @@ cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
         m <- x$getsolve()
         if(!is.null(m)) {
-                message("getting cached inverse")
+                message("Getting inverse matrix from cache")
                 return(m)
         }
         data <- x$get()
-        ## Test if data is not a square matrix
         if(nrow(data) != ncol(data)) {
-                message("Data is not square and has no inverse!")
-                ## Test if data is a singular matrix
+                message("The stored matrix is not square and has no inverse!")
+                ## Test if data is not a square matrix
         } else if(det(data) == 0) {
-                message("Data is singular and has no inverse!")
+                ## Test if data is a singular matrix
+                message("The stored matrix is singular and has no inverse!")
         } else {
+                ## Calculate the inverse of the stored matrix and store
+                ## the result in cache
                 m <- solve(data, ...)
                 x$setsolve(m)
                 m
